@@ -1,0 +1,82 @@
+# Hybrid Codebase Index settings (default, embedded).
+#
+# This file is embedded into the MCP binary so the server has stable defaults
+# even when no workspace override exists.
+#
+# To override per-workspace, create:
+#   <workspace>/.hybrid-codebase-index/settings.toml
+#
+# Preferred format: sectioned tables. Old flat keys are still supported for back-compat.
+
+[scope]
+# Optional extra roots (relative to workspace root) to include in indexing.
+extra_include_roots = []
+
+# Optional roots (relative to workspace root) to exclude from indexing (fast directory-skip).
+exclude_roots = []
+
+# Built-in path denylist (applied before gitignore). List of directory names (path segments).
+exclude_path_segments = ["bin", "obj", ".git", "node_modules", ".vs", ".idea", ".cache", ".cascade-ide"]
+
+# Which gitignore-like files are applied (relative to workspace root).
+# Add env-specific ignores (e.g. ".cursorignore") in workspace override settings.toml.
+ignore_files = [".gitignore", ".git/info/exclude", ".cascadeideignore"]
+
+[fts]
+# Include *.cs as plain text documents in FTS (Roslyn truth still handles semantics).
+include_cs_in_fts = true
+
+# Default indexed extensions (strings without dot are accepted).
+include_extensions = ["md", "mdx", "csproj", "slnx", "props", "targets", "toml", "editorconfig", "json", "yml", "yaml", "razor", "css", "scss", "html", "axaml", "cs"]
+
+# Optional: subtract from the effective set.
+# exclude_extensions = ["cs"]
+
+# Max file size indexed as a single document (bytes). Larger files are skipped as too_large.
+max_indexed_file_bytes = 524288
+
+# Chunking (line windows) for FTS documents.
+chunk_lines = 110
+chunk_overlap_lines = 15
+
+# Binary detection probe size (bytes); if the probe contains NUL, file is treated as binary.
+binary_probe_bytes = 8192
+
+[semantic]
+# Semantic / vec (opt-in)
+enabled = false# Embeddings settings: prefer nested table for clarity.
+[semantic.embeddings]
+# Provider id (v0: "dummy"; also supported: "onnx")
+provider = "dummy"# Provider/model-specific name (optional; ignored by dummy).
+model = ""# Explicit dimension; 0 = provider default.
+dim = 0
+
+# ONNX provider: path to the ONNX model file (relative to index dir or absolute).
+model_path = ""
+
+# ONNX provider: WordPiece vocab file (relative to index dir or absolute), usually vocab.txt.
+vocab_path = ""
+
+# ONNX provider: whether to lowercase in BasicTokenizer step.
+do_lower_case = true
+
+# sqlite-vec: optional loadable extension path (absolute, or relative to index dir, then to MCP app dir).
+# Default vec0.dll is copied next to HybridCodebaseIndex.Mcp on Windows builds when native/win-x64/vec0.dll is present.
+# If the file is missing (e.g. Linux), load is skipped without error.
+sqlite_vec_extension_path = "vec0.dll"
+
+# Extensions policy for vec (embeddings and KNN channel).
+# Default: inherit effective extensions from [fts], then apply add/remove.
+# - vec_extensions_mode = "inherit_fts" | "custom"
+# - vec_extensions: base list when mode="custom" (normalized with dots)
+# - vec_add_extensions / vec_remove_extensions: overrides (normalized with dots)
+vec_extensions_mode = "inherit_fts"
+vec_extensions = []
+vec_add_extensions = []
+vec_remove_extensions = []
+
+# For token-based models: sequence length (0 = provider default, typically 128..256).
+sequence_length = 0
+
+# Prefer GPU if available (ONNX Runtime CUDA EP).
+prefer_gpu = true
