@@ -10,7 +10,7 @@
     <Description>Гибридный индекс кодовой базы: SQLite FTS5, опционально vec/эмбеддинги, сканер workspace.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>AIGuiders.HybridCodebaseIndex.Core</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>LonelySoul; AIGuiders</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/KarataevDmitry/hybrid-codebase-index-core</PackageProjectUrl>
@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.12" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0" />
     <PackageReference Include="Ignore" Version="0.2.1" />
     <PackageReference Include="Tomlyn" Version="2.3.0" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.22.0" />

@@ -21,7 +21,7 @@
 ## Установка
 
 ```bash
-dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.0
+dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.1
 ```
 
 Актуальная версия: [nuget.org](https://www.nuget.org/packages/AIGuiders.HybridCodebaseIndex.Core).
