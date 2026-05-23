@@ -1,4 +1,4 @@
-# Trusted Publishing (nuget.org OIDC). Политика: Owner KarataevDmitry, Repo hybrid-codebase-index-core,
+# Trusted Publishing (nuget.org OIDC). Политика: Owner AI-Guiders, Repo hybrid-codebase-index-core,
 # Workflow file: publish-nuget.yml. Профиль nuget.org: LonelySoul.
 name: Publish NuGet
 

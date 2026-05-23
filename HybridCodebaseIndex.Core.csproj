@@ -13,8 +13,8 @@
     <Version>0.1.2</Version>
     <Authors>LonelySoul; AIGuiders</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/KarataevDmitry/hybrid-codebase-index-core</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/KarataevDmitry/hybrid-codebase-index-core</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/AI-Guiders/hybrid-codebase-index-core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AI-Guiders/hybrid-codebase-index-core</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>fts;sqlite;codebase;index;mcp;embedding</PackageTags>
   </PropertyGroup>
