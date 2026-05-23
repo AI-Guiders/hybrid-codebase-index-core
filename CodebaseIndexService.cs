@@ -1,3 +1,5 @@
+using HybridCodebaseIndex.Core.Indexing;
+
 namespace HybridCodebaseIndex.Core;
 
 /// <summary>Сервис гибридного индекса (слой B по ADR 0105 CascadeIDE; v0: FTS5 по тексту файлов).</summary>
@@ -23,25 +25,45 @@ public sealed class CodebaseIndexService
     }
 
     public Task<ReindexSummary> FullReindexAsync(string workspaceRoot, CancellationToken cancellationToken = default)
-        => FullReindexAsync(workspaceRoot, solutionPath: null, cancellationToken);
+        => FullReindexAsync(workspaceRoot, solutionPath: null, reindexObservers: null, cancellationToken);
 
-    public Task<ReindexSummary> FullReindexAsync(string workspaceRoot, string? solutionPath, CancellationToken cancellationToken = default)
+    public Task<ReindexSummary> FullReindexAsync(
+        string workspaceRoot,
+        string? solutionPath,
+        CancellationToken cancellationToken = default)
+        => FullReindexAsync(workspaceRoot, solutionPath, reindexObservers: null, cancellationToken);
+
+    public Task<ReindexSummary> FullReindexAsync(
+        string workspaceRoot,
+        string? solutionPath,
+        IReadOnlyList<ICodebaseIndexReindexObserver>? reindexObservers,
+        CancellationToken cancellationToken = default)
     {
         var root = Path.GetFullPath(workspaceRoot.TrimEnd(Path.DirectorySeparatorChar));
         var indexDir = ResolveIndexDirectoryRelative(root, solutionPath);
         var db = SqliteFtsIndex.ResolveDatabasePathForWrite(root, indexDir);
-        return SqliteFtsIndex.ReindexIncrementalAsync(root, db, cancellationToken);
+        return SqliteFtsIndex.ReindexIncrementalAsync(root, db, reindexObservers, cancellationToken);
     }
 
     public Task<ReindexSummary> FullRebuildAsync(string workspaceRoot, CancellationToken cancellationToken = default)
-        => FullRebuildAsync(workspaceRoot, solutionPath: null, cancellationToken);
+        => FullRebuildAsync(workspaceRoot, solutionPath: null, reindexObservers: null, cancellationToken);
 
-    public Task<ReindexSummary> FullRebuildAsync(string workspaceRoot, string? solutionPath, CancellationToken cancellationToken = default)
+    public Task<ReindexSummary> FullRebuildAsync(
+        string workspaceRoot,
+        string? solutionPath,
+        CancellationToken cancellationToken = default)
+        => FullRebuildAsync(workspaceRoot, solutionPath, reindexObservers: null, cancellationToken);
+
+    public Task<ReindexSummary> FullRebuildAsync(
+        string workspaceRoot,
+        string? solutionPath,
+        IReadOnlyList<ICodebaseIndexReindexObserver>? reindexObservers,
+        CancellationToken cancellationToken = default)
     {
         var root = Path.GetFullPath(workspaceRoot.TrimEnd(Path.DirectorySeparatorChar));
         var indexDir = ResolveIndexDirectoryRelative(root, solutionPath);
         var db = SqliteFtsIndex.ResolveDatabasePathForWrite(root, indexDir);
-        return SqliteFtsIndex.FullRebuildAsync(root, db, cancellationToken);
+        return SqliteFtsIndex.FullRebuildAsync(root, db, reindexObservers, cancellationToken);
     }
 
     public Task<ExplainHitResponse> ExplainHitAsync(

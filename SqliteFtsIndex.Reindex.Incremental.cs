@@ -1,12 +1,17 @@
 using System.Globalization;
 using System.Text;
+using HybridCodebaseIndex.Core.Indexing;
 using Microsoft.Data.Sqlite;
 
 namespace HybridCodebaseIndex.Core;
 
 internal static partial class SqliteFtsIndex
 {
-    private static ReindexSummary ReindexIncremental(string workspaceRoot, string dbPath, CancellationToken cancellationToken)
+    private static ReindexSummary ReindexIncremental(
+        string workspaceRoot,
+        string dbPath,
+        IReadOnlyList<ICodebaseIndexReindexObserver>? reindexObservers,
+        CancellationToken cancellationToken)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
         workspaceRoot = Path.GetFullPath(workspaceRoot.TrimEnd(Path.DirectorySeparatorChar));
@@ -133,6 +138,7 @@ internal static partial class SqliteFtsIndex
                 DeleteChunksForPath(conn, tx, rel);
 
                 var ext = Path.GetExtension(absolute);
+                NotifyFileIndexed(reindexObservers, workspaceRoot, rel, absolute, ext, text, lastWriteUtcTicks);
                 var header = BuildArtifactAugmentationHeader(workspaceRoot, absolute, rel, ext, text);
                 var chunks = WorkspaceScanner.ChunkByLines(text, chunkLines, overlapLines);
                 var anyChunk = false;

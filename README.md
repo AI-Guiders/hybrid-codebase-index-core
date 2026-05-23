@@ -16,12 +16,20 @@
 
 Подробнее о тулсах MCP и сценариях — в репозитории [hybrid-codebase-index](https://github.com/KarataevDmitry/hybrid-codebase-index) (`docs/`).
 
+### Reindex observers (v0.1.2+)
+
+При `FullReindexAsync` / `FullRebuildAsync` можно передать `IReadOnlyList<ICodebaseIndexReindexObserver>`:
+для каждого проиндексированного файла вызывается `OnFileIndexed(IndexedFileEvent)` с **уже прочитанным** текстом.
+Поток — фоновый reindex; observer не должен блокировать надолго.
+
+Cascade IDE регистрирует `IntercomSymbolLineHciReindexObserver` и строит symbol sidecar attach без второго `ReadAllText` по репозиторию.
+
 ---
 
 ## Установка
 
 ```bash
-dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.1
+dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.2
 ```
 
 Актуальная версия: [nuget.org](https://www.nuget.org/packages/AIGuiders.HybridCodebaseIndex.Core).

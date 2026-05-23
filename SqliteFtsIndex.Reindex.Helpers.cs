@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using HybridCodebaseIndex.Core.Indexing;
 using Microsoft.Data.Sqlite;
 
 namespace HybridCodebaseIndex.Core;
@@ -496,5 +497,38 @@ internal static partial class SqliteFtsIndex
             .Take(12)
             .Select(static kv => (kv.Key, kv.Value))
             .ToArray();
+
+    internal static void NotifyFileIndexed(
+        IReadOnlyList<ICodebaseIndexReindexObserver>? observers,
+        string workspaceRoot,
+        string relativePathUnix,
+        string absolutePath,
+        string extension,
+        string text,
+        long lastWriteUtcTicks)
+    {
+        if (observers is null || observers.Count == 0)
+            return;
+
+        var evt = new IndexedFileEvent(
+            workspaceRoot,
+            relativePathUnix,
+            absolutePath,
+            extension,
+            text,
+            lastWriteUtcTicks);
+
+        foreach (var observer in observers)
+        {
+            try
+            {
+                observer.OnFileIndexed(evt);
+            }
+            catch
+            {
+                // best-effort: observers must not break reindex
+            }
+        }
+    }
 }
 

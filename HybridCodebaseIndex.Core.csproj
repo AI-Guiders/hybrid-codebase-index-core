@@ -10,7 +10,7 @@
     <Description>Гибридный индекс кодовой базы: SQLite FTS5, опционально vec/эмбеддинги, сканер workspace.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>AIGuiders.HybridCodebaseIndex.Core</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>LonelySoul; AIGuiders</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/KarataevDmitry/hybrid-codebase-index-core</PackageProjectUrl>
