@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0" />
+    <!-- Override transitive 2.1.11 (CVE-2025-6965 / GHSA-2m69-gcr7-jv3q); bundles SQLite >= 3.50.2. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.3" />
     <PackageReference Include="Ignore" Version="0.2.1" />
     <PackageReference Include="Tomlyn" Version="2.3.0" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.22.0" />
