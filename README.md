@@ -16,6 +16,12 @@
 
 Подробнее о тулсах MCP и сценариях — в репозитории [hybrid-codebase-index](https://github.com/AI-Guiders/hybrid-codebase-index) (`docs/`).
 
+### CamelCase / FTS densify (v0.1.3+)
+
+SQLite FTS5 `unicode61` keeps `PlanBoardLeaf` as one token, so middle segments like `BoardLeaf` miss.
+Core expands CamelCase identifiers into segment tokens at index time (`__hci_camel:`) and splits MATCH queries
+(`BoardLeaf` → full prefix OR (`Board` AND `Leaf`)). Reindex required after upgrade.
+
 ### Reindex observers (v0.1.2+)
 
 При `FullReindexAsync` / `FullRebuildAsync` можно передать `IReadOnlyList<ICodebaseIndexReindexObserver>`:
@@ -29,7 +35,7 @@ Cascade IDE регистрирует `IntercomSymbolLineHciReindexObserver` и �
 ## Установка
 
 ```bash
-dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.2
+dotnet add package AIGuiders.HybridCodebaseIndex.Core --version 0.1.3
 ```
 
 Актуальная версия: [nuget.org](https://www.nuget.org/packages/AIGuiders.HybridCodebaseIndex.Core).
