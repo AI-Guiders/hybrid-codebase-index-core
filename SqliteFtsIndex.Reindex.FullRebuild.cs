@@ -172,7 +172,7 @@ internal static partial class SqliteFtsIndex
                     insert.Parameters.AddWithValue("$ext", ext);
                     insert.Parameters.AddWithValue("$ls", lineStart);
                     insert.Parameters.AddWithValue("$le", lineEnd);
-                    insert.Parameters.AddWithValue("$body", augmentedBody);
+                    insert.Parameters.AddWithValue("$body", FtsCamelCase.ExpandBodyForFts(augmentedBody));
                     insert.ExecuteNonQuery();
                     anyChunk = true;
                 }

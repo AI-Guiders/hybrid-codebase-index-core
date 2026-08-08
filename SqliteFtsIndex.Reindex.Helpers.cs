@@ -463,7 +463,7 @@ internal static partial class SqliteFtsIndex
         cmd.Parameters.AddWithValue("$ext", ext);
         cmd.Parameters.AddWithValue("$ls", lineStart);
         cmd.Parameters.AddWithValue("$le", lineEnd);
-        cmd.Parameters.AddWithValue("$body", body);
+        cmd.Parameters.AddWithValue("$body", FtsCamelCase.ExpandBodyForFts(body));
         cmd.ExecuteNonQuery();
     }
 

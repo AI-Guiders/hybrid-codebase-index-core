@@ -205,10 +205,10 @@ internal static partial class SqliteFtsIndex
         var parts = new List<string>(tokens.Length);
         foreach (var t in tokens)
         {
-            var safe = t.Replace("\"", "", StringComparison.Ordinal).Replace("'", "", StringComparison.Ordinal);
-            if (safe.Length == 0)
+            var term = FtsCamelCase.BuildMatchTerm(t);
+            if (term.Length == 0)
                 continue;
-            parts.Add('"' + safe + "\"*");
+            parts.Add(term);
         }
 
         return parts.Count == 0 ? null : string.Join(" AND ", parts);
